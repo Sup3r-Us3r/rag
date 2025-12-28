@@ -1,5 +1,5 @@
 ---
-description: Documento normativo da API Nest.js: adota Clean Architecture, DDD e SOLID. Define camadas, responsabilidades, padrões de código, nomenclaturas, contratos, testes e integrações. Deve ser a única fonte de verdade para gerar código e testes
+description: Documento normativo da API Nest.js, adota Clean Architecture, DDD e SOLID. Define camadas, responsabilidades, padrões de código, nomenclaturas, contratos, testes e integrações. Deve ser a única fonte de verdade para gerar código e testes
 ---
 
 # CONTEXTO ARQUITETURAL DA API

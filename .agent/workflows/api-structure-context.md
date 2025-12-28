@@ -20,41 +20,61 @@ src/
 - main.ts
 - application/
   - use-cases/
-    - users/
-      - create-user/
-      - delete-user/
-      - get-user-by-id/
-      - list-users/
-      - update-user/
+    - [modulo]/
+      - [caso-de-uso]/
+        - [caso-de-uso]-dto.ts
+        - [caso-de-uso]-use-case.ts
+        - [caso-de-uso]-use-case.spec.ts
 - domain/
   - providers/
+    - cache-provider.ts
+    - email-provider.ts
+    - hash-provider.ts
   - shared/
     - value-objects/
-  - users/
+  - [modulo]/
     - entities/
     - repositories/
     - value-objects/
 - infrastructure/
   - config/
+    - rabbitmq-config.ts
   - database/
     - memory/
+      - [modulo]-in-memory-repository.ts
     - prisma/
     - repositories/
+      - prisma-[modulo]-repository.ts
   - email/
+    - email-template-service.ts
+    - templates/
   - messaging/
     - consumers/
     - publishers/
     - rabbitmq/
   - providers/
+    - bcrypt-hash-provider.ts
+    - redis-cache-provider.ts
+    - smtp-email-provider.ts
   - websocket/
     - gateways/
 - presentation/
   - http/
     - controllers/
+      - [modulo]-controller.ts
     - dtos/
+      - [modulo]/
   - modules/
+    - app-module.ts
+    - rabbitmq-module.ts
+    - websocket-module.ts
+    - [modulo]-module.ts
 - shared/
   - exceptions/
+    - domain-exception.ts
+    - internal-server-error-exception.ts
+    - not-found-exception.ts
+    - validation-exception.ts
   - types/
   - utils/
 
@@ -96,7 +116,7 @@ Responsabilidade:
 - Modelar o domínio de forma explícita
 
 ### 4.1 Entidades
-Local: src/domain/users/entities
+Local: src/domain/[modulo]/entities
 
 - Representam conceitos centrais do domínio
 - Possuem identidade
@@ -104,7 +124,7 @@ Local: src/domain/users/entities
 
 ### 4.2 Value Objects
 Local:
-- src/domain/users/value-objects
+- src/domain/[modulo]/value-objects
 - src/domain/shared/value-objects
 
 - São imutáveis
@@ -112,7 +132,7 @@ Local:
 - Validam regras próprias (ex: CPF, Email, Address)
 
 ### 4.3 Repositórios
-Local: src/domain/users/repositories
+Local: src/domain/[modulo]/repositories
 
 - São interfaces
 - Definem contratos de persistência
@@ -121,8 +141,10 @@ Local: src/domain/users/repositories
 ### 4.4 Providers (Abstrações)
 Local: src/domain/providers
 
-- Interfaces para serviços externos
-- Exemplos: cache, hash, email
+- Interfaces para serviços externos:
+  - cache-provider.ts: Interface para operações de cache
+  - hash-provider.ts: Interface para hashing de senhas
+  - email-provider.ts: Interface para envio de emails
 - Nunca possuem implementação nesta camada
 
 É proibido:
@@ -157,17 +179,30 @@ Regras:
 
 Local: src/infrastructure/providers
 
-- Implementam interfaces definidas no domínio
-- Exemplos: bcrypt, redis, SMTP
+- Implementam interfaces definidas no domínio:
+  - bcrypt-hash-provider.ts: Implementação de HashProvider usando bcrypt
+  - redis-cache-provider.ts: Implementação de CacheProvider usando Redis
+  - smtp-email-provider.ts: Implementação de EmailProvider usando SMTP/Nodemailer
 
 ### 5.3 Email
 
 Local: src/infrastructure/email
 
-- Contém templates e serviços de envio
-- Nunca contém regra de negócio
+Estrutura:
+- email-template-service.ts: Serviço para renderização de templates
+- templates/: Contém templates de email (ex: React Email)
 
-### 5.4 RabbitMQ
+Regras:
+- Nunca contém regra de negócio
+- Templates são renderizados pelo EmailTemplateService
+
+### 5.4 Configurações
+
+Local: src/infrastructure/config
+
+- rabbitmq-config.ts: Configurações do RabbitMQ
+
+### 5.5 RabbitMQ
 
 Local:
 - src/infrastructure/messaging/rabbitmq
@@ -226,6 +261,13 @@ Local: src/presentation/http/dtos
 
 Local: src/presentation/modules
 
+Módulos existentes:
+- app-module.ts: Módulo principal da aplicação
+- rabbitmq-module.ts: Módulo de mensageria RabbitMQ
+- websocket-module.ts: Módulo de WebSocket
+- [modulo]-module.ts: Módulos de domínio específicos (ex: users-module.ts)
+
+Responsabilidades:
 - Organização dos módulos Nest.js
 - Realizam injeção de dependência
 - Conectam camadas sem violar dependências
@@ -237,7 +279,13 @@ Local: src/presentation/modules
 ### 8.1 Exceptions
 Local: src/shared/exceptions
 
-- Exceções padronizadas
+Exceções padronizadas disponíveis:
+- domain-exception.ts: Exceção base de domínio
+- internal-server-error-exception.ts: Erros internos do servidor
+- not-found-exception.ts: Recurso não encontrado
+- validation-exception.ts: Erros de validação
+
+Regras:
 - Exceções de domínio não dependem de Nest.js
 
 ### 8.2 Utils e Types
@@ -271,7 +319,8 @@ Vitest é obrigatório.
 ## 10. Convenções Gerais
 
 - PascalCase para classes
-- camelCase para métodos
+- camelCase para métodos e propriedades
+- kebab-case para nomes de arquivos (ex: create-user-use-case.ts)
 - Um arquivo por classe
 - Nomes devem refletir intenção de negócio
 - Não existem services genéricos

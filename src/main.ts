@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
+import basicAuth from 'express-basic-auth';
 import { AppModule } from './presentation/modules/app-module';
 
 async function bootstrap() {
@@ -11,6 +12,19 @@ async function bootstrap() {
 
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+
+  const swaggerUser = configService.get<string>('SWAGGER_USER') ?? 'root';
+  const swaggerPassword =
+    configService.get<string>('SWAGGER_PASSWORD') ?? 'toor';
+
+  // Protect /docs routes with HTTP Basic Auth
+  app.use(
+    '/docs',
+    basicAuth({
+      challenge: true,
+      users: { [swaggerUser]: swaggerPassword },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('POC API')

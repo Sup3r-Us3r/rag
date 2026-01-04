@@ -151,6 +151,8 @@ Create a `.env` file in the project root based on `.env.example`:
 | `SMTP_HOST` | SMTP server host | `smtp4dev` |
 | `SMTP_PORT` | SMTP server port | `25` |
 | `SMTP_FROM` | Default "from" email address | `noreply@api.com` |
+| `SWAGGER_USER` | Swagger Basic Auth username | `root` |
+| `SWAGGER_PASSWORD` | Swagger Basic Auth password | `toor` |
 
 ## 🛠️ Getting Started
 
@@ -237,6 +239,8 @@ Create a `.env` file in the project root based on `.env.example`:
      -e SMTP_HOST="smtp-host" \
      -e SMTP_PORT=587 \
      -e SMTP_FROM="noreply@yourdomain.com" \
+     -e SWAGGER_USER="root" \
+     -e SWAGGER_PASSWORD="toor" \
      nestjs-api:latest
    ```
 

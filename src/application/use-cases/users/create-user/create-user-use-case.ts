@@ -10,9 +10,10 @@ import { WelcomeEmailTemplate } from '@infra/email/templates/welcome-email-templ
 import { UserEventsPublisher } from '@infra/messaging/publishers/users/user-events-publisher/user-events-publisher';
 import { UserGateway } from '@infra/websocket/gateways/users/user-gateway';
 import { Injectable, Logger } from '@nestjs/common';
+import { Traced } from '@shared/decorators/traced';
 import { ValidationException } from '@shared/exceptions/validation-exception';
 import * as React from 'react';
-import {
+import type {
   CreateUserUseCaseInputDTO,
   CreateUserUseCaseOutputDTO,
 } from './create-user-dto';
@@ -30,6 +31,7 @@ export class CreateUserUseCase {
     private readonly emailTemplateService: EmailTemplateService,
   ) {}
 
+  @Traced()
   async execute(
     input: CreateUserUseCaseInputDTO,
   ): Promise<CreateUserUseCaseOutputDTO> {

@@ -1,6 +1,7 @@
 import { UserRepository } from '@domain/users/repositories/user-repository';
 import { Injectable } from '@nestjs/common';
-import {
+import { Traced } from '@shared/decorators/traced';
+import type {
   ListUsersUseCaseInputDTO,
   ListUsersUseCaseOutputDTO,
 } from './list-users-dto';
@@ -9,6 +10,7 @@ import {
 export class ListUsersUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
+  @Traced()
   async execute(
     input: ListUsersUseCaseInputDTO,
   ): Promise<ListUsersUseCaseOutputDTO> {

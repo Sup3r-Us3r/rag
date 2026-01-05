@@ -1,8 +1,9 @@
 import { UserRepository } from '@domain/users/repositories/user-repository';
 import { AddressVO } from '@domain/users/value-objects/address-vo';
 import { Injectable } from '@nestjs/common';
+import { Traced } from '@shared/decorators/traced';
 import { NotFoundException } from '@shared/exceptions/not-found-exception';
-import {
+import type {
   UpdateUserUseCaseInputDTO,
   UpdateUserUseCaseOutputDTO,
 } from './update-user-dto';
@@ -11,6 +12,7 @@ import {
 export class UpdateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
+  @Traced()
   async execute(
     input: UpdateUserUseCaseInputDTO,
   ): Promise<UpdateUserUseCaseOutputDTO> {

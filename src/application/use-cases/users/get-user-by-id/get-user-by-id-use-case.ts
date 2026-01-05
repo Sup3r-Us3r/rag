@@ -1,7 +1,8 @@
 import { UserRepository } from '@domain/users/repositories/user-repository';
 import { Injectable } from '@nestjs/common';
+import { Traced } from '@shared/decorators/traced';
 import { NotFoundException } from '@shared/exceptions/not-found-exception';
-import {
+import type {
   GetUserByIdUseCaseInputDTO,
   GetUserByIdUseCaseOutputDTO,
 } from './get-user-by-id-dto';
@@ -10,6 +11,7 @@ import {
 export class GetUserByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
+  @Traced()
   async execute(
     input: GetUserByIdUseCaseInputDTO,
   ): Promise<GetUserByIdUseCaseOutputDTO> {

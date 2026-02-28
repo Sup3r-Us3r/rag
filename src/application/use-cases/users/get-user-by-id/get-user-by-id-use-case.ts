@@ -25,15 +25,6 @@ export class GetUserByIdUseCase {
       id: user.id,
       name: user.name,
       email: user.email.value,
-      cpf: user.cpf.formatted,
-      address: {
-        street: user.address.street,
-        number: user.address.number,
-        city: user.address.city,
-        state: user.address.state,
-        zipCode: user.address.zipCode,
-        complement: user.address.complement,
-      },
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

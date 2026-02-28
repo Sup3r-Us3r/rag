@@ -1,17 +1,17 @@
 // biome-ignore assist/source/organizeImports: <OpenTelemetry needs to patch modules before they are loaded>
-import tracer from './tracer';
+// import tracer from './tracer';
 
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './presentation/modules/app-module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
 import basicAuth from 'express-basic-auth';
+import { AppModule } from './presentation/modules/app-module';
 
 async function bootstrap() {
   // Start OpenTelemetry tracer before creating the NestJS app
-  await tracer.start();
+  // await tracer.start();
 
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
@@ -33,7 +33,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('POC API')
+    .setTitle('RAG API')
     .setDescription('API documentation')
     .setVersion('1.0')
     .build();

@@ -1,14 +1,10 @@
 import { EmailProvider } from '@domain/providers/email-provider';
 import { HashProvider } from '@domain/providers/hash-provider';
-import { CpfVO } from '@domain/shared/value-objects/cpf-vo';
 import { EmailVO } from '@domain/shared/value-objects/email-vo';
 import { User } from '@domain/users/entities/user-entity';
 import { UserRepository } from '@domain/users/repositories/user-repository';
-import { AddressVO } from '@domain/users/value-objects/address-vo';
 import { EmailTemplateService } from '@infra/email/email-template-service';
 import { WelcomeEmailTemplate } from '@infra/email/templates/welcome-email-template';
-import { UserEventsPublisher } from '@infra/messaging/publishers/users/user-events-publisher/user-events-publisher';
-import { UserGateway } from '@infra/websocket/gateways/users/user-gateway';
 import { Injectable, Logger } from '@nestjs/common';
 import { Traced } from '@shared/decorators/traced';
 import { ValidationException } from '@shared/exceptions/validation-exception';
@@ -25,8 +21,6 @@ export class CreateUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hashProvider: HashProvider,
-    private readonly userEventsPublisher: UserEventsPublisher,
-    private readonly userGateway: UserGateway,
     private readonly emailProvider: EmailProvider,
     private readonly emailTemplateService: EmailTemplateService,
   ) {}
@@ -46,32 +40,9 @@ export class CreateUserUseCase {
       name: input.name,
       email: new EmailVO(input.email),
       password: hashedPassword,
-      cpf: new CpfVO(input.cpf),
-      address: new AddressVO({
-        street: input.street,
-        number: input.number,
-        city: input.city,
-        state: input.state,
-        zipCode: input.zipCode,
-        complement: input.complement,
-      }),
     });
 
     await this.userRepository.create(user);
-    await this.userEventsPublisher.publishUserCreated({
-      id: user.id,
-      name: user.name,
-      email: user.email.value,
-      cpf: user.cpf.value,
-      createdAt: user.createdAt,
-    });
-    this.userGateway.emitUserCreated({
-      id: user.id,
-      name: user.name,
-      email: user.email.value,
-      cpf: user.cpf.value,
-      createdAt: user.createdAt,
-    });
 
     // Send welcome email
     try {

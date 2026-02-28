@@ -1,7 +1,7 @@
 {
-  "name": "poc-api",
+  "name": "rag-api",
   "version": "0.0.1",
-  "description": "POC API",
+  "description": "RAG API",
   "author": "Mayderson Mello",
   "private": true,
   "license": "MIT",

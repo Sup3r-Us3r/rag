@@ -7,17 +7,13 @@ import { HashProvider } from '@domain/providers/hash-provider';
 import { UserRepository } from '@domain/users/repositories/user-repository';
 import { PrismaService } from '@infra/database/prisma/prisma-service';
 import { PrismaUserRepository } from '@infra/database/repositories/prisma-user-repository';
-import { UserCreatedConsumer } from '@infra/messaging/consumers/users/user-created/user-created-consumer';
-import { UserUpdatedConsumer } from '@infra/messaging/consumers/users/user-updated/user-updated-consumer';
-import { UserEventsPublisher } from '@infra/messaging/publishers/users/user-events-publisher/user-events-publisher';
 import { BcryptHashProvider } from '@infra/providers/bcrypt-hash-provider';
 import { forwardRef, Module } from '@nestjs/common';
 import { UsersController } from '../http/controllers/users-controller';
 import { AppModule } from './app-module';
-import { RabbitMQModule } from './rabbitmq-module';
 
 @Module({
-  imports: [RabbitMQModule, forwardRef(() => AppModule)],
+  imports: [forwardRef(() => AppModule)],
   controllers: [UsersController],
   providers: [
     PrismaService,
@@ -26,10 +22,6 @@ import { RabbitMQModule } from './rabbitmq-module';
     UpdateUserUseCase,
     DeleteUserUseCase,
     ListUsersUseCase,
-    // Consumers & Publisher
-    UserCreatedConsumer,
-    UserUpdatedConsumer,
-    UserEventsPublisher,
     // Repositories & Providers Mappings
     {
       provide: UserRepository,

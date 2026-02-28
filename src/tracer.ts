@@ -34,7 +34,7 @@ const traceExporter = isDevelopment
 
 // Create resource with service information
 const resource = resourceFromAttributes({
-  [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'poc-api',
+  [ATTR_SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'rag-api',
   [ATTR_SERVICE_VERSION]: process.env.OTEL_SERVICE_VERSION || '1.0.0',
 });
 

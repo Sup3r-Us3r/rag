@@ -28,7 +28,7 @@ export const WelcomeEmailTemplate: React.FC<WelcomeEmailProps> = ({ name }) => {
           <Container className="mx-auto max-w-xl bg-white px-8 py-10 my-10 rounded-lg shadow-lg">
             <Section className="text-center mb-8">
               <Heading className="text-3xl font-bold text-emerald-600 m-0">
-                POC API
+                RAG API
               </Heading>
             </Section>
 
@@ -37,7 +37,7 @@ export const WelcomeEmailTemplate: React.FC<WelcomeEmailProps> = ({ name }) => {
                 Olá, {name}! 👋
               </Heading>
               <Text className="text-gray-600 text-base leading-relaxed">
-                Seja muito bem-vindo(a) à <strong>POC API</strong>! Estamos
+                Seja muito bem-vindo(a) à <strong>RAG API</strong>! Estamos
                 muito felizes em tê-lo(a) conosco.
               </Text>
               <Text className="text-gray-600 text-base leading-relaxed">
@@ -60,7 +60,7 @@ export const WelcomeEmailTemplate: React.FC<WelcomeEmailProps> = ({ name }) => {
                 Se você não criou esta conta, por favor ignore este email.
               </Text>
               <Text className="text-gray-400 text-xs text-center mt-4">
-                © {new Date().getFullYear()} POC API. Todos os direitos
+                © {new Date().getFullYear()} RAG API. Todos os direitos
                 reservados.
               </Text>
             </Section>

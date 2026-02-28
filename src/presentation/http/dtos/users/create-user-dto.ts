@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserRequestDTO {
   @ApiProperty({ example: 'John Doe' })
@@ -16,41 +16,6 @@ export class CreateUserRequestDTO {
   @IsString()
   @IsNotEmpty()
   password: string;
-
-  @ApiProperty({ example: '12345678901' })
-  @IsString()
-  @IsNotEmpty()
-  cpf: string;
-
-  @ApiProperty({ example: 'Main Street' })
-  @IsString()
-  @IsNotEmpty()
-  street: string;
-
-  @ApiProperty({ example: '123' })
-  @IsString()
-  @IsNotEmpty()
-  number: string;
-
-  @ApiProperty({ example: 'New York' })
-  @IsString()
-  @IsNotEmpty()
-  city: string;
-
-  @ApiProperty({ example: 'NY' })
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @ApiProperty({ example: '10001' })
-  @IsString()
-  @IsNotEmpty()
-  zipCode: string;
-
-  @ApiProperty({ required: false, example: 'Apt 4B' })
-  @IsString()
-  @IsOptional()
-  complement?: string;
 }
 
 export class CreateUserResponseDTO {

@@ -71,21 +71,6 @@ services:
     networks:
       - api-network
 
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: api-rabbitmq
-    ports:
-      - '5672:5672'
-      - '15672:15672'
-    healthcheck:
-      test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-    networks:
-      - api-network
-
   smtp4dev:
     image: rnwood/smtp4dev:v3
     container_name: api-smtp4dev

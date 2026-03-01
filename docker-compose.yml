@@ -18,12 +18,6 @@ services:
       - /app/node_modules
     environment:
       - DATABASE_URL=${DATABASE_URL}
-      - RABBITMQ_URI=${RABBITMQ_URI}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - SMTP_HOST=${SMTP_HOST}
-      - SMTP_PORT=${SMTP_PORT}
-      - SMTP_FROM=${SMTP_FROM}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - GEMINI_EMBEDDING_MODEL=${GEMINI_EMBEDDING_MODEL}
       - GEMINI_CHAT_MODEL=${GEMINI_CHAT_MODEL}
@@ -58,28 +52,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    networks:
-      - api-network
-
-  redis:
-    image: redis:alpine
-    container_name: api-redis
-    ports:
-      - '6379:6379'
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - api-network
-
-  smtp4dev:
-    image: rnwood/smtp4dev:v3
-    container_name: api-smtp4dev
-    ports:
-      - '8080:80' # Web UI
-      - '2525:25' # SMTP
     networks:
       - api-network
 

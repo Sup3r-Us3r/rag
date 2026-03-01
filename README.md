@@ -57,7 +57,7 @@ sequenceDiagram
 
 ## 🐳 Running with Docker
 
-The easiest way to get the application up and running is by using Docker and Docker Compose. This will spin up the API server along with PostgreSQL, Redis, and SMTP4Dev.
+The easiest way to get the application up and running is by using Docker and Docker Compose. This will spin up the API server along with PostgreSQL.
 
 ### Prerequisites
 
@@ -86,11 +86,12 @@ The easiest way to get the application up and running is by using Docker and Doc
 3. **Start the containers:**
    Run the following command to start the application and its infrastructure services:
    ```bash
-   docker-compose up -d --build
+   docker-compose up -d
    ```
 
 4. **Access the API:**
    - The API will be available at: [http://localhost:3000](http://localhost:3000)
+   - The API Docs will be available at: [http://localhost:3000/docs](http://localhost:3000/docs)
    - *Note: On initialization, the container will automatically install dependencies, generate the Prisma client, and apply database migrations (via `entrypoint-development.sh`).*
 
 ### Stopping the application

@@ -1,0 +1,10 @@
+model DocumentChunk {
+  id           String   @id @default(uuid())
+  content      String   @db.Text
+  embedding    Unsupported("vector(768)")
+  metadata     Json     @default("{}")
+  documentName String   @db.VarChar(500) @map("document_name")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("document_chunks")
+}

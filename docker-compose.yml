@@ -24,6 +24,9 @@ services:
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_PORT=${SMTP_PORT}
       - SMTP_FROM=${SMTP_FROM}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_EMBEDDING_MODEL=${GEMINI_EMBEDDING_MODEL}
+      - GEMINI_CHAT_MODEL=${GEMINI_CHAT_MODEL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -39,7 +42,7 @@ services:
   # ---------------------------------------------------------------------------
 
   postgres:
-    image: postgres:15-alpine
+    image: pgvector/pgvector:pg15
     container_name: api-postgres
     ports:
       - '5432:5432'

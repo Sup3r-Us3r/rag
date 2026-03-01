@@ -4,10 +4,17 @@ import { RedisCacheProvider } from '@infra/providers/redis-cache-provider';
 import { SmtpEmailProvider } from '@infra/providers/smtp-email-provider';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ChatModule } from './chat-module';
+import { DocumentsModule } from './documents-module';
 import { UsersModule } from './users-module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), UsersModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    ChatModule,
+    DocumentsModule,
+  ],
   providers: [
     RedisCacheProvider,
     EmailTemplateService,
